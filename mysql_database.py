@@ -135,7 +135,7 @@ def SHOW_DATABASES(connector_name):
     conn= eval(connector_name)
     dbcursor = conn.cursor(buffered=True)
     dbcursor.execute('SHOW DATABASES')
-    for x dbcursor:
+    for x in dbcursor:
         print(x) 
 
 def query_with_fetchall(connection_name, query, get_object=False):
@@ -228,8 +228,9 @@ def insert_data_vendor(data_vendor_id, name, website_url, support_email, created
     db.close()    
 
 
- def insert_exchange(exchange_id, abbrev, name, city, country, currency, created_date,
-                    path ,filename='config.ini', section='mysql', dbname=None, timezone='America/New_York'):
+def insert_exchange(exchange_id, abbrev, name, city, country, currency, created_date,
+    path ,filename='config.ini', section='mysql', dbname=None, timezone='America/New_York'):
+    
     '''
     Insert a new exchange in "exchange" table
     Params
@@ -270,7 +271,7 @@ def insert_data_vendor(data_vendor_id, name, website_url, support_email, created
     db.commit()
     db.close()    
 
- def insert_symbol(file_name, created_date, path ,filename='config.ini', section='mysql', dbname=None):
+def insert_symbol(file_name, created_date, path ,filename='config.ini', section='mysql', dbname=None):
     '''
     Insert a new symbol(s) in "symbol" table
     Params
@@ -310,17 +311,16 @@ def insert_data_vendor(data_vendor_id, name, website_url, support_email, created
     db.commit()
     db.close()    
 
-def insert_price_data_yahoo(ticker_list, created_date, start='1999-12-31',end='2018-12-31', 
-                            path ,filename='config.ini', section='mysql', dbname=None):
+def insert_price_data_yahoo(ticker_list, created_date, path , start='1999-12-31',end='2018-12-31', filename='config.ini', section='mysql', dbname=None):
     '''
     Insert yahoo price data into daily_price table into database
     Params
     -----
     ticker_list = List of tickers to be retrieved.
-    start = Date of updated entry. Introduce today date as format 'YYYY-MM-DD'.
+    created_date = Date of updated entry. Introduce today date as format 'YYYY-MM-DD'.
+    path: string with the windows location of the config file e.g. "C:\\Users\\User_name\\Desktop\\SSH_KEYS"
     start = start date to retrieve data. Format 'YYYY-MM-DD'.
     end = end date to retrieve data. Format 'YYYY-MM-DD'.
-    path: string with the windows location of the config file e.g. "C:\\Users\\User_name\\Desktop\\SSH_KEYS"
     filename: string name of the configuration file. Default is finding a file named "config.ini"
     section: section of database configuration. Default is calling that section within the config file as "mysql"
     dbname: string name of database name to connect. Default is None.
